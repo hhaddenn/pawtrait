@@ -10,6 +10,7 @@ import {
 	AttachmentMedia,
 	AttachmentTitle,
 } from "@/components/ui/attachment";
+import PhotoCanvas from "@/components/PhotoCanvas";
 
 function toMegabytes(bytes) {
 	return (bytes / 1048576).toFixed(1);
@@ -58,6 +59,9 @@ function App() {
 						</AttachmentActions>
 					</Attachment>
 				)}
+
+				{/* Only shown once a photo has been chosen */}
+				{photo && <PhotoCanvas file={photo} />}
 			</div>
 		</main>
 	);

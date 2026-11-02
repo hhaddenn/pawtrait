@@ -31,10 +31,10 @@ Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 
 ### 🟡 Capítulo 3 — Do ficheiro ao canvas
 
-- [ ] `lib/image.js`: `createImageBitmap(file, { imageOrientation: 'from-image' })`
-- [ ] Redução para no máximo ~1000 px de largura
+- [x] `lib/image.js`: `createImageBitmap(file, { imageOrientation: 'from-image' })`
+- [x] Redução para no máximo ~1000 px de largura
 - [ ] Obter `ImageData` a partir de um canvas
-- [ ] Mostrar a imagem original num `<canvas>`
+- [x] Mostrar a imagem original num `<canvas>` (`PhotoCanvas`)
 
 ### ⬜ Capítulo 4 — Filtro Lápis 🎯 _ponto de teste_
 
@@ -59,10 +59,12 @@ Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 - [ ] A pata segue a posição de desenho atual
 - [ ] Coordenadas certas quando o canvas é redimensionado por CSS
 
-### ⬜ Capítulo 7 — Descarregar PNG
+### ⬜ Capítulo 7 — Descarregar o desenho
 
-- [ ] `lib/download.js` com `canvas.toBlob`
-- [ ] Botão de descarregar
+- [ ] `lib/download.js` com `canvas.toBlob` → ficheiro PNG
+- [ ] Botão de descarregar, ativo só quando o desenho existe
+- [ ] Nome do ficheiro com o nome da foto e o estilo (ex.: `my-cat-pencil.png`)
+- [ ] Descarregar o resultado final mesmo que a animação ainda esteja a meio
 
 ---
 
@@ -94,7 +96,17 @@ Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 - [ ] Foco visível e labels em todos os controlos
 - [ ] `useReducedMotion` → saltar a animação
 
-### ⬜ Capítulo 11 — README e deploy
+### ⬜ Capítulo 11 — Versão em português (EN/PT)
+
+- [ ] Textos da interface num dicionário por idioma (`src/i18n/en.js`, `src/i18n/pt.js`), sem biblioteca
+- [ ] Contexto/hook `useTranslation` para ler os textos nos componentes
+- [ ] Seletor de idioma (shadcn) e idioma inicial a partir do browser (`navigator.language`)
+- [ ] Escolha guardada no `localStorage`
+- [ ] Atualizar `<html lang>` quando o idioma muda
+- [ ] Mensagens de erro (`validateImageFile`) e nomes dos estilos também traduzidos
+- [ ] (Opcional) `README.pt.md` com link no README em inglês
+
+### ⬜ Capítulo 12 — README e deploy
 
 - [ ] README final em inglês (descrição, espaço para GIF, correr localmente, deploy, explicação dos filtros, link para a demo)
 - [ ] Descrição, topics e link da demo no GitHub
@@ -105,7 +117,7 @@ Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 
 ## Fase E — Adicionar ao meu portfolio
 
-### ⬜ Capítulo 12 — Mostrar o projeto
+### ⬜ Capítulo 13 — Mostrar o projeto
 
 - [ ] GIF curto da animação do gato e 1–2 screenshots (claro/escuro, mobile)
 - [ ] Texto de apresentação: o problema, o que a app faz e o que aprendi (filtros à mão, Web Worker, animação com `requestAnimationFrame`)
@@ -120,7 +132,7 @@ Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 - **JavaScript** em vez de TypeScript, por ser a linguagem mais familiar. Os tipos importantes (ex.: `Filter`) são documentados com JSDoc para o editor ajudar.
 - **ESLint** em vez de Oxlint: mais maduro, e o plugin `react-hooks` apanha erros nos efeitos da animação.
 - **shadcn/ui** com estilo **Maia** (arredondado, espaçamento generoso, bom para toque) sobre **Radix UI**; ícones **Lucide**.
-- **Interface em inglês** (textos, `lang="en"`), coerente com o README e com um portfolio público.
+- **Interface em inglês** por omissão (textos, `lang="en"`), coerente com o README e com um portfolio público, com **versão em português** no Capítulo 11. Até lá, os textos ficam em inglês diretamente no JSX.
 - **Prettier** trata da formatação (tabs com largura 4, aspas duplas) e o **ESLint** trata da qualidade do código. Cada ferramenta tem o seu papel.
 - Os filtros são funções puras `(ImageData) => ImageData`, o que os deixa prontos para o Worker sem os reescrever.
 - Não se usam bibliotecas de processamento de imagem.
