@@ -21,6 +21,10 @@ const MAX_MAGNITUDE = 4 * 255 * Math.SQRT2;
 const FLOW_BLUR_RADIUS = 6; // a much softer blur than the contours: we want the big shapes, not the details
 const FLOW_THRESHOLD = 0.02; // below this (0–1) an area is "flat": keep the classic HATCH_ANGLE
 
+// Hand tremor: real strokes are never perfectly straight
+const STROKE_POINTS = 4; // points per stroke (2 = a straight line, more = a wobblier line)
+const TREMOR = 0.7; // how far each point can drift sideways, in pixels
+
 /**
  * Graphite pencil, first version: diagonal hatching that gets denser where the photo is darker.
  * @param {ImageData} imageData - the photo
@@ -61,14 +65,9 @@ export function pencil(imageData) {
 					-CONTOUR_SPACING / 2,
 					CONTOUR_SPACING / 2,
 				);
-
-			const dx = (Math.cos(angle) * CONTOUR_LENGTH) / 2;
-			const dy = (Math.sin(angle) * CONTOUR_LENGTH) / 2;
-			const start = { x: cx - dx, y: cy - dy };
-			const end = { x: cx + dx, y: cy + dy };
 			const lineMark = {
 				type: "line",
-				points: [start, end],
+				points: handDrawnPoints(random, cx, cy, angle, CONTOUR_LENGTH),
 				width: randomBetween(random, 0.8, 1.6),
 				color: GRAPHITE,
 				opacity: 0.5 + strength * 0.4,
@@ -92,13 +91,9 @@ export function pencil(imageData) {
 				flowStrength > FLOW_THRESHOLD ? flow.angle[index] : HATCH_ANGLE;
 			const angle =
 				baseAngle + randomBetween(random, -ANGLE_WOBBLE, +ANGLE_WOBBLE);
-			const dx = (Math.cos(angle) * STROKE_LENGTH) / 2;
-			const dy = (Math.sin(angle) * STROKE_LENGTH) / 2;
-			const start = { x: cx - dx, y: cy - dy };
-			const end = { x: cx + dx, y: cy + dy };
 			const lineMark = {
 				type: "line",
-				points: [start, end],
+				points: handDrawnPoints(random, cx, cy, angle, STROKE_LENGTH),
 				width: randomBetween(random, 0.6, 1.4),
 				color: GRAPHITE,
 				opacity: 0.25 + darkness * 0.6,
@@ -108,6 +103,35 @@ export function pencil(imageData) {
 	}
 
 	return { marks };
+}
+
+/**
+ * The points of a hand-drawn stroke: from one end, through the centre, to the other end,
+ * each point nudged a little sideways like a real hand would.
+ * @param {() => number} random - the style's generator
+ * @param {number} cx - centre of the stroke
+ * @param {number} cy - centre of the stroke
+ * @param {number} angle - direction of the stroke, in radians
+ * @param {number} length - in pixels
+ * @returns {{ x: number, y: number }[]}
+ */
+function handDrawnPoints(random, cx, cy, angle, length) {
+	const ax = Math.cos(angle);
+	const ay = Math.sin(angle);
+	const px = -ay;
+	const py = ax;
+
+	const points = [];
+	for (let i = 0; i < STROKE_POINTS; i += 1) {
+		const t = i / (STROKE_POINTS - 1) - 0.5;
+		const along = t * length;
+		const across = randomBetween(random, -TREMOR, TREMOR);
+		points.push({
+			x: cx + ax * along + px * across,
+			y: cy + ay * along + py * across,
+		});
+	}
+	return points;
 }
 
 /**
