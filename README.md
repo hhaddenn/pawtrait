@@ -1,6 +1,6 @@
 # 🐾 Pawtrait
 
-Upload a photo and watch a cat sketch it in pencil, ink, cartoon and more.
+Upload a photo and watch a cat draw it in graphite, ink, watercolor and more.
 Everything runs in your browser, so your photos never leave your device.
 
 > 🚧 **Work in progress.** A live demo is coming soon.
@@ -8,9 +8,10 @@ Everything runs in your browser, so your photos never leave your device.
 ## Features (planned)
 
 - Upload a photo with a button or by drag and drop
-- Several hand-written drawing styles: pencil, ink, cartoon, mosaic and halftone
-- A drawing animation where a cat's paw sketches the result across the screen
-- Download the result as a PNG
+- Several drawing styles: graphite, ink, watercolor, halftone, mosaic and cartoon
+- Real stroke-by-stroke drawing: each style turns the photo into strokes, dots or brush marks
+- A drawing animation where a cat's paw follows every stroke as it's drawn
+- Download the result as a PNG, even before the animation ends
 - Mobile-first layout with light and dark themes
 
 ## Tech stack
@@ -21,7 +22,7 @@ Everything runs in your browser, so your photos never leave your device.
 - [shadcn/ui](https://ui.shadcn.com/) on top of [Radix UI](https://www.radix-ui.com/)
 - [Lucide](https://lucide.dev/) icons
 
-No image-processing libraries: every filter is implemented by hand on raw pixel data.
+No image-processing libraries: the photo analysis (greyscale, blur, edge detection) and every drawing style are implemented by hand on raw pixel data.
 
 ## Getting started
 
