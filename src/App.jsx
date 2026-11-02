@@ -11,7 +11,11 @@ import {
 	AttachmentTitle,
 } from "@/components/ui/attachment";
 import PhotoCanvas from "@/components/PhotoCanvas";
-import { grayscale } from "@/lib/pixels";
+import { grayscale, blur } from "@/lib/pixels";
+
+function previewAnalysis(imageData) {
+	return blur(grayscale(imageData), 10);
+}
 
 function toMegabytes(bytes) {
 	return (bytes / 1048576).toFixed(1);
@@ -62,7 +66,7 @@ function App() {
 				)}
 
 				{/* Only shown once a photo has been chosen */}
-				{photo && <PhotoCanvas file={photo} filter={grayscale} />}
+				{photo && <PhotoCanvas file={photo} filter={previewAnalysis} />}
 			</div>
 		</main>
 	);
