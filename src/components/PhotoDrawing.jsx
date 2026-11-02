@@ -6,7 +6,7 @@ import { loadImageData } from "@/lib/image";
 
 /**
  * Turns a photo into a drawing: reads its pixels, runs a style on them and draws the resulting marks.
- * @param {{ file: File, style: (imageData: ImageData) => { marks: import("@/lib/marks").Mark[] } }} props
+ * @param {{ file: File, style: import("@/styles").Style }} props
  */
 function PhotoDrawing({ file, style }) {
 	const [drawing, setDrawing] = useState(null);
@@ -21,7 +21,7 @@ function PhotoDrawing({ file, style }) {
 				if (ignore) {
 					return;
 				}
-				const { base, marks } = style(imageData);
+				const { base, marks } = style.draw(imageData);
 				setDrawing({
 					width: imageData.width,
 					height: imageData.height,

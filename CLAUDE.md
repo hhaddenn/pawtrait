@@ -67,7 +67,7 @@ File ─► loadImageData (lib/image.js) ─► ImageData ─► style (styles/*
 
 | Ficheiro                           | Papel                                                                                                                                        |
 | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `src/App.jsx`                      | Estado `photo`, `ImageUploader`, `Attachment` com o ficheiro, `<PhotoDrawing file={photo} style={pencil} />`                                 |
+| `src/App.jsx`                      | Estado `photo`, `ImageUploader`, `Attachment` com o ficheiro, `<PhotoDrawing file={photo} style={DEFAULT_STYLE} />`                          |
 | `src/components/ImageUploader.jsx` | `Empty` do shadcn + botão + input escondido + drag-and-drop; `selectFile` é a porta única com validação                                      |
 | `src/components/PhotoDrawing.jsx`  | Carrega os píxeis, corre o estilo, guarda `{ width, height, marks, base }` em estado; padrão `ignore` + cleanup; `Alert` de erro             |
 | `src/components/DrawingCanvas.jsx` | Só desenha: papel (cor ou `base`) + `drawMarks`                                                                                              |
@@ -76,11 +76,12 @@ File ─► loadImageData (lib/image.js) ─► ImageData ─► style (styles/*
 | `src/lib/pixels.js`                | Análise: `invert`, `grayscale` (BT.601), `blur` (caixa), `sobel` (→ `magnitude`, `angle` em `Float32Array`), `clamp`                         |
 | `src/lib/marks.js`                 | Tipos `DotMark`, `LineMark`, `Mark` (JSDoc) e o renderizador `drawMarks` (`switch` por tipo, erro em tipos desconhecidos)                    |
 | `src/lib/random.js`                | `createRandom(seed)` (LCG, _closure_) e `randomBetween(random, min, max)`                                                                    |
-| `src/lib/paper.js`                 | `PAPER_COLOR` e `paperTexture` (em curso na 4.7c)                                                                                            |
+| `src/lib/paper.js`                 | `PAPER_COLOR` e `paperTexture` (grão do papel, camada `base`)                                                                                |
+| `src/styles/index.js`              | Registo dos estilos: tipos `StyleResult` e `Style` (`{ id, name, draw }`), `STYLES`, `DEFAULT_STYLE`                                         |
 | `src/styles/pencil.js`             | Grafite: contornos (Sobel) → tracejado que segue o fluxo (Sobel muito desfocado) → tracejado cruzado nas sombras; `handDrawnPoints` (tremor) |
 
 ## Onde parámos
 
-**Tarefa 4.7c — grão do papel** (ver o roadmap). Os TODOs 1–15 estão escritos em `src/lib/paper.js`, `src/components/DrawingCanvas.jsx`, `src/components/PhotoDrawing.jsx` e `src/styles/pencil.js`, e a explicação já foi dada. Próximo passo: rever o que o Hugo fez nesses TODOs (`grep -rn TODO src`), depois commit (`feat: add paper grain to the pencil style`) e seguir para a 4.8 (`styles/index.js` + tipo `Style` em JSDoc).
+**Capítulo 4 fechado** (4.8: um `Style` é um objeto `{ id, name, draw }`; `STYLES` e `DEFAULT_STYLE` vivem em `src/styles/index.js`). Próximo passo: Capítulo 5, animação do desenho, a começar pela ordem das marcas (ver o roadmap). Ainda não há TODOs escritos para o Capítulo 5.
 
-Perguntas que ficaram por responder e podem ser retomadas: a da 4.7c (porque é que o papel tem de ser gerado depois dos riscos).
+Perguntas que ficaram por responder e podem ser retomadas: a da 4.8 (porque é que `STYLES` tem de estar fora dos componentes: identidade do objeto e dependências do `useEffect`). Ideia adiada pelo Hugo para discutir mais tarde (não pôr no roadmap sem ele pedir): detalhe adaptativo no lápis (grelha mais fina onde há mais contornos).

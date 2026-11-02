@@ -2,7 +2,7 @@
 
 Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 
-**Estado atual:** Capítulo 4 — Grafite por traços 🟡
+**Estado atual:** Capítulo 5 — Animação do desenho ⬜
 
 ---
 
@@ -36,7 +36,7 @@ Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 - [x] Obter `ImageData` a partir de um canvas e aplicar um filtro (teste com `invert` em `lib/pixels.js`)
 - [x] Mostrar a imagem original num `<canvas>` (`PhotoCanvas`)
 
-### 🟡 Capítulo 4 — Grafite por traços 🎯 _ponto de teste_
+### ✅ Capítulo 4 — Grafite por traços 🎯 _ponto de teste_
 
 Cada estilo analisa a foto e devolve uma **lista de marcas** (traços, pontos, pinceladas…) que um renderizador comum desenha. Ver "Arquitetura dos estilos" nas notas.
 
@@ -50,8 +50,8 @@ Cada estilo analisa a foto e devolve uma **lista de marcas** (traços, pontos, p
 - [x] 4.6b O tracejado segue a direção dos contornos (as sombras curvam com a forma)
 - [x] 4.7a Tremor da mão: cada traço passa a ter vários pontos ligeiramente desalinhados (`handDrawnPoints`)
 - [x] 4.7b Tracejado cruzado: uma segunda camada noutra direção nas sombras mais escuras
-- [ ] 4.7c Grão do papel: textura subtil na camada `base` do estilo
-- [ ] 4.8 `styles/pencil.js` + `styles/index.js` (registo dos estilos) + tipo `Style` em JSDoc
+- [x] 4.7c Grão do papel: textura subtil na camada `base` do estilo
+- [x] 4.8 `styles/pencil.js` + `styles/index.js` (registo dos estilos) + tipo `Style` em JSDoc
 
 ---
 

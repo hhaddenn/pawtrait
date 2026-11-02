@@ -31,9 +31,10 @@ const CROSS_THRESHOLD = 0.55; // darkness (0–1) above which cross-hatching sta
 const CROSS_ANGLE = Math.PI / 2.5; // ~72°: the second layer crosses the first at this angle
 
 /**
- * Graphite pencil, first version: diagonal hatching that gets denser where the photo is darker.
+ * Graphite pencil: contour strokes first, then hatching that curves with the shape and gets denser
+ * where the photo is darker, then cross-hatching in the darkest shadows, all on grainy paper.
  * @param {ImageData} imageData - the photo
- * @returns {{ marks: import("@/lib/marks").Mark[] }}
+ * @returns {import("@/styles").StyleResult}
  */
 export function pencil(imageData) {
 	const tones = blur(grayscale(imageData), BLUR_RADIUS);
