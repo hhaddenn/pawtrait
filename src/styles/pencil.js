@@ -1,5 +1,6 @@
 import { blur, grayscale, sobel } from "@/lib/pixels";
 import { createRandom, randomBetween } from "@/lib/random";
+// TODO 13: import paperTexture from "@/lib/paper"
 
 // How the pencil behaves. Tweak these and see what changes!
 const BLUR_RADIUS = 2; // smooths the photo so single noisy pixels don't get strokes
@@ -140,6 +141,10 @@ export function pencil(imageData) {
 
 	marks.push(...crossMarks);
 
+	// TODO 14: make the paper HERE, after all the strokes: const base = paperTexture(tones.width, tones.height, random);
+	//   (if it came first, it would use up random numbers and every stroke would change: remember the 4.7a question)
+
+	// TODO 15: return { base, marks }
 	return { marks };
 }
 

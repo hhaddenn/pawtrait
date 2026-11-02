@@ -21,6 +21,7 @@ function PhotoDrawing({ file, style }) {
 				if (ignore) {
 					return;
 				}
+				// TODO 11: also take `base` from the style's result, and keep it in the drawing state
 				const { marks } = style(imageData);
 				setDrawing({
 					width: imageData.width,
@@ -53,6 +54,7 @@ function PhotoDrawing({ file, style }) {
 				</Alert>
 			)}
 			{drawing !== null && (
+				// TODO 12: pass base={drawing.base}
 				<DrawingCanvas
 					width={drawing.width}
 					height={drawing.height}
