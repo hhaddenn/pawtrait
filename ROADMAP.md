@@ -2,13 +2,13 @@
 
 Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 
-**Estado atual:** Capítulo 1 — Setup 🟡
+**Estado atual:** Capítulo 2 — Upload 🟡
 
 ---
 
 ## Fase A — Primeiro protótipo testável
 
-### 🟡 Capítulo 1 — Setup
+### ✅ Capítulo 1 — Setup
 
 - [x] Projeto Vite + React + JavaScript criado (com ESLint)
 - [x] Prettier configurado (tabs de 4, aspas duplas), scripts `format` e `format:check`, formatar ao guardar
@@ -20,14 +20,14 @@ Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 - [x] `.gitignore` revisto (`node_modules`, `dist`, `.env*`, `.wrangler`, ficheiros do SO e do editor)
 - [x] `README.md` inicial em inglês (nome, descrição numa frase, stack, como correr localmente, aviso "work in progress")
 - [x] `LICENSE` escolhida (ex.: MIT)
-- [ ] Primeiro commit
+- [x] Primeiro commit
 
-### ⬜ Capítulo 2 — Upload
+### 🟡 Capítulo 2 — Upload
 
-- [ ] `ImageUploader` com botão (input `file` acessível, com label)
+- [x] `ImageUploader` com botão (input `file` acessível, com label)
 - [ ] Drag-and-drop com feedback visual
 - [ ] Validação do tipo de ficheiro (`image/*`)
-- [ ] `File` guardado em estado no `App`
+- [x] `File` guardado em estado no `App`
 
 ### ⬜ Capítulo 3 — Do ficheiro ao canvas
 
