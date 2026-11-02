@@ -10,46 +10,8 @@ import {
 	AttachmentMedia,
 	AttachmentTitle,
 } from "@/components/ui/attachment";
-import PhotoCanvas from "@/components/PhotoCanvas";
-import { grayscale, blur } from "@/lib/pixels";
-import DrawingCanvas from "@/components/DrawingCanvas";
-import { createRandom, randomBetween } from "@/lib/random";
-
-function previewAnalysis(imageData) {
-	return blur(grayscale(imageData), 10);
-}
-
-/**
- * Temporary test: lots of short random pencil strokes, always the same ones for the same seed.
- * (from 4.5 on, the marks come from the pencil style)
- */
-function makeScribbles(seed) {
-	const random = createRandom(seed);
-	const marks = [];
-
-	for (let i = 0; i < 300; i += 1) {
-		const x = randomBetween(random, 0, 600);
-		const y = randomBetween(random, 0, 400);
-		const length = randomBetween(random, 5, 25);
-		const angle = randomBetween(random, 0, Math.PI * 2);
-		const endPoint = {
-			x: x + Math.cos(angle) * length,
-			y: y + Math.sin(angle) * length,
-		};
-		const lineMark = {
-			type: "line",
-			points: [{ x, y }, endPoint],
-			width: randomBetween(random, 0.5, 2),
-			color: "#2b2b2b",
-			opacity: randomBetween(random, 0.3, 0.9),
-		};
-		marks.push(lineMark);
-	}
-
-	return marks;
-}
-
-const SCRIBBLE_MARKS = makeScribbles(42);
+import PhotoDrawing from "@/components/PhotoDrawing";
+import { scribbles } from "@/styles/scribbles";
 
 function toMegabytes(bytes) {
 	return (bytes / 1048576).toFixed(1);
@@ -98,15 +60,8 @@ function App() {
 						</AttachmentActions>
 					</Attachment>
 				)}
-
 				{/* Only shown once a photo has been chosen */}
-				{photo && <PhotoCanvas file={photo} filter={previewAnalysis} />}
-
-				<DrawingCanvas
-					width={600}
-					height={400}
-					marks={SCRIBBLE_MARKS}
-				/>
+				{photo && <PhotoDrawing file={photo} style={scribbles} />}
 			</div>
 		</main>
 	);

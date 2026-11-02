@@ -36,3 +36,19 @@ export async function loadBitmap(file) {
 	});
 	return bitmap;
 }
+
+/**
+ * Decodes a photo and returns its raw pixels, upright and at most MAX_WIDTH pixels wide.
+ * Nothing is shown on screen: this is what the drawing styles analyse.
+ */
+export async function loadImageData(file) {
+	const bitmap = await loadBitmap(file);
+	const size = fitToWidth(bitmap.width, bitmap.height, MAX_WIDTH);
+	const canvas = new OffscreenCanvas(size.width, size.height);
+	const ctx = canvas.getContext("2d", {
+		willReadFrequently: true,
+	});
+	ctx.drawImage(bitmap, 0, 0, size.width, size.height);
+	bitmap.close();
+	return ctx.getImageData(0, 0, size.width, size.height);
+}
