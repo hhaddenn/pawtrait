@@ -93,3 +93,54 @@ function clamp(value, min, max) {
 	}
 	return value;
 }
+
+// Sobel kernels: how much each of the 8 neighbours counts when measuring the change in brightness.
+// Rows are dy = -1, 0, +1 and columns are dx = -1, 0, +1.
+const SOBEL_X = [
+	[-1, 0, 1],
+	[-2, 0, 2],
+	[-1, 0, 1],
+];
+const SOBEL_Y = [
+	[-1, -2, -1],
+	[0, 0, 0],
+	[1, 2, 1],
+];
+
+/**
+ * Finds the edges of a greyscale image with the Sobel operator.
+ * For every pixel it measures how fast the brightness changes, and in which direction.
+ * @param {ImageData} imageData - a greyscale image (red = green = blue)
+ * @returns {{ width: number, height: number, magnitude: Float32Array, angle: Float32Array }}
+ *   magnitude: how strong the edge is (0 = flat). angle: the direction the edge runs along, in radians.
+ *   Both have ONE value per pixel, at index y × width + x (no × 4!)
+ */
+export function sobel(imageData) {
+	const width = imageData.width;
+	const height = imageData.height;
+	const src = imageData.data;
+	const magnitude = new Float32Array(width * height);
+	const angle = new Float32Array(width * height);
+
+	for (let y = 0; y < height; y += 1) {
+		for (let x = 0; x < width; x += 1) {
+			let gx = 0;
+			let gy = 0;
+
+			for (let dy = -1; dy <= 1; dy += 1) {
+				for (let dx = -1; dx <= 1; dx += 1) {
+					const nx = clamp(x + dx, 0, width - 1);
+					const ny = clamp(y + dy, 0, height - 1);
+					const index = (ny * width + nx) * 4;
+					const brightness = src[index];
+					gx += brightness * SOBEL_X[dy + 1][dx + 1];
+					gy += brightness * SOBEL_Y[dy + 1][dx + 1];
+				}
+			}
+			const index = y * width + x;
+			magnitude[index] = Math.hypot(gx, gy);
+			angle[index] = Math.atan2(gy, gx) + Math.PI / 2;
+		}
+	}
+	return { width, height, magnitude, angle };
+}

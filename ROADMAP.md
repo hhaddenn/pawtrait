@@ -46,7 +46,8 @@ Cada estilo analisa a foto e devolve uma **lista de marcas** (traços, pontos, p
 - [x] 4.4 `lib/random.js`: números pseudoaleatórios com semente (a mesma foto dá sempre o mesmo desenho)
 - [x] 4.5a Ligar tudo: `loadImageData(file)` + `PhotoDrawing` (foto → píxeis → estilo → marcas → `DrawingCanvas` do tamanho da foto), com um estilo de teste (`styles/scribbles.js`)
 - [x] 4.5b Primeiro lápis: tracejado diagonal mais denso nas zonas escuras → primeiro esboço visível
-- [ ] 4.6 `lib/pixels.js`: gradientes (Sobel) → os traços seguem a direção dos contornos + traços de contorno
+- [x] 4.6a `lib/pixels.js`: gradientes (Sobel) → traços de contorno (queixo, olhos, nariz)
+- [ ] 4.6b O tracejado segue a direção dos contornos (as sombras curvam com a forma)
 - [ ] 4.7 Aspeto de grafite: espessura e opacidade variáveis, tremor da mão, tracejado cruzado nas sombras, grão do papel
 - [ ] 4.8 `styles/pencil.js` + `styles/index.js` (registo dos estilos) + tipo `Style` em JSDoc
 
