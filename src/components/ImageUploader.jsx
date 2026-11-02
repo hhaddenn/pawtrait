@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { cn } from "cn";
 import { ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,7 @@ import {
  */
 function ImageUploader({ onSelect }) {
 	const inputRef = useRef(null);
+	const [isDragging, setIsDragging] = useState(false);
 
 	function openFilePicker() {
 		inputRef.current.click();
@@ -29,15 +31,48 @@ function ImageUploader({ onSelect }) {
 		event.target.value = "";
 	}
 
+	// Fires over and over while something is dragged over the drop zone
+	function handleDragOver(event) {
+		event.preventDefault();
+		setIsDragging(true);
+	}
+
+	// Fires when the drag leaves the drop zone... or moves onto one of its children
+	function handleDragLeave(event) {
+		if (event.currentTarget.contains(event.relatedTarget)) {
+			return;
+		}
+		setIsDragging(false);
+	}
+
+	function handleDrop(event) {
+		event.preventDefault();
+		setIsDragging(false);
+
+		const file = event.dataTransfer.files[0];
+		if (file) {
+			onSelect(file);
+		}
+	}
+
 	return (
-		<Empty className="border border-dashed">
+		<Empty
+			className={cn(
+				"border border-dashed transition-colors",
+				isDragging && "border-primary bg-muted",
+			)}
+			onDrop={handleDrop}
+			onDragLeave={handleDragLeave}
+			onDragOver={handleDragOver}
+		>
 			<EmptyHeader>
 				<EmptyMedia variant="icon">
 					<ImageIcon />
 				</EmptyMedia>
 				<EmptyTitle>Upload a photo</EmptyTitle>
 				<EmptyDescription>
-					The photo never leaves the device.
+					Drag and drop a photo here, or use the button. It never
+					leaves your device.
 				</EmptyDescription>
 			</EmptyHeader>
 			<EmptyContent>

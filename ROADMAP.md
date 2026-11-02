@@ -25,7 +25,7 @@ Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 ### 🟡 Capítulo 2 — Upload
 
 - [x] `ImageUploader` com botão (input `file` acessível, com label)
-- [ ] Drag-and-drop com feedback visual
+- [x] Drag-and-drop com feedback visual
 - [ ] Validação do tipo de ficheiro (`image/*`)
 - [x] `File` guardado em estado no `App`
 
