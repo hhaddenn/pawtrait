@@ -15,11 +15,14 @@ const GRAIN_SOFTNESS = 1; // blur radius: 0 = sharp noise, 1–2 = soft paper fi
  * @returns {ImageData}
  */
 export function paperTexture(width, height, random) {
-	// TODO 1: create the ImageData and its `data` shortcut
-	// TODO 2: loop over the data four values at a time (i += 4), like in grayscale
-	// TODO 3: pick ONE random offset per pixel: grain = randomBetween(random, -GRAIN, GRAIN)
-	//   (the same offset for red, green and blue keeps the paper's colour, only lighter or darker)
-	// TODO 4: write PAPER_COLOR.red + grain, PAPER_COLOR.green + grain and PAPER_COLOR.blue + grain,
-	//   and alpha 255 (the paper is fully opaque)
-	// TODO 5: soften the grain and return it: return blur(texture, GRAIN_SOFTNESS);
+	const texture = new ImageData(width, height);
+	const dst = texture.data;
+	for (let i = 0; i < dst.length; i += 4) {
+		const grain = randomBetween(random, -GRAIN, GRAIN);
+		dst[i] = PAPER_COLOR.red + grain;
+		dst[i + 1] = PAPER_COLOR.green + grain;
+		dst[i + 2] = PAPER_COLOR.blue + grain;
+		dst[i + 3] = 255;
+	}
+	return blur(texture, GRAIN_SOFTNESS);
 }
