@@ -1,0 +1,2 @@
+# Normalise line endings to LF for every text file, regardless of core.autocrlf
+* text=auto eol=lf
