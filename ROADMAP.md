@@ -2,7 +2,7 @@
 
 Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 
-**Estado atual:** Capítulo 2 — Upload 🟡
+**Estado atual:** Capítulo 3 — Do ficheiro ao canvas 🟡
 
 ---
 
@@ -22,14 +22,14 @@ Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 - [x] `LICENSE` escolhida (ex.: MIT)
 - [x] Primeiro commit
 
-### 🟡 Capítulo 2 — Upload
+### ✅ Capítulo 2 — Upload
 
 - [x] `ImageUploader` com botão (input `file` acessível, com label)
 - [x] Drag-and-drop com feedback visual
-- [ ] Validação do tipo de ficheiro (`image/*`)
+- [x] Validação do tipo (JPEG, PNG, WebP, GIF, AVIF) e do tamanho (máx. 25 MB) em `lib/image.js`, com `Alert`
 - [x] `File` guardado em estado no `App`
 
-### ⬜ Capítulo 3 — Do ficheiro ao canvas
+### 🟡 Capítulo 3 — Do ficheiro ao canvas
 
 - [ ] `lib/image.js`: `createImageBitmap(file, { imageOrientation: 'from-image' })`
 - [ ] Redução para no máximo ~1000 px de largura
