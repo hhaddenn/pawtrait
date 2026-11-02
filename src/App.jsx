@@ -11,7 +11,7 @@ import {
 	AttachmentTitle,
 } from "@/components/ui/attachment";
 import PhotoDrawing from "@/components/PhotoDrawing";
-import { scribbles } from "@/styles/scribbles";
+import { pencil } from "@/styles/pencil";
 
 function toMegabytes(bytes) {
 	return (bytes / 1048576).toFixed(1);
@@ -61,7 +61,7 @@ function App() {
 					</Attachment>
 				)}
 				{/* Only shown once a photo has been chosen */}
-				{photo && <PhotoDrawing file={photo} style={scribbles} />}
+				{photo && <PhotoDrawing file={photo} style={pencil} />}
 			</div>
 		</main>
 	);
