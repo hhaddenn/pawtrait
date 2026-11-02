@@ -6,8 +6,9 @@ import { MAX_WIDTH, fitToWidth, loadBitmap } from "@/lib/image";
 
 /**
  * Draws the chosen photo on a canvas, upright and at most MAX_WIDTH pixels wide.
+ * If a filter is given, it's applied to the pixels before showing them.
  */
-function PhotoCanvas({ file }) {
+function PhotoCanvas({ file, filter }) {
 	const canvasRef = useRef(null);
 	const [error, setError] = useState(null);
 
@@ -31,11 +32,24 @@ function PhotoCanvas({ file }) {
 				canvas.width = size.width;
 				canvas.height = size.height;
 
-				const ctx = canvas.getContext("2d");
+				const ctx = canvas.getContext("2d", {
+					willReadFrequently: true,
+				});
 
 				ctx.drawImage(bitmap, 0, 0, size.width, size.height);
 
 				bitmap.close();
+
+				if (filter) {
+					const imageData = ctx.getImageData(
+						0,
+						0,
+						size.width,
+						size.height,
+					);
+					const result = filter(imageData);
+					ctx.putImageData(result, 0, 0);
+				}
 
 				setError(null);
 			} catch {
@@ -50,7 +64,7 @@ function PhotoCanvas({ file }) {
 		return () => {
 			ignore = true;
 		};
-	}, [file]);
+	}, [file, filter]);
 
 	return (
 		<>

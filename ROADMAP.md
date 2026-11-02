@@ -2,7 +2,7 @@
 
 Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 
-**Estado atual:** Capítulo 3 — Do ficheiro ao canvas 🟡
+**Estado atual:** Capítulo 4 — Filtro Lápis 🟡
 
 ---
 
@@ -29,14 +29,14 @@ Legenda: ⬜ por fazer · 🟡 em curso · ✅ concluído
 - [x] Validação do tipo (JPEG, PNG, WebP, GIF, AVIF) e do tamanho (máx. 25 MB) em `lib/image.js`, com `Alert`
 - [x] `File` guardado em estado no `App`
 
-### 🟡 Capítulo 3 — Do ficheiro ao canvas
+### ✅ Capítulo 3 — Do ficheiro ao canvas
 
 - [x] `lib/image.js`: `createImageBitmap(file, { imageOrientation: 'from-image' })`
 - [x] Redução para no máximo ~1000 px de largura
-- [ ] Obter `ImageData` a partir de um canvas
+- [x] Obter `ImageData` a partir de um canvas e aplicar um filtro (teste com `invert` em `lib/pixels.js`)
 - [x] Mostrar a imagem original num `<canvas>` (`PhotoCanvas`)
 
-### ⬜ Capítulo 4 — Filtro Lápis 🎯 _ponto de teste_
+### 🟡 Capítulo 4 — Filtro Lápis 🎯 _ponto de teste_
 
 - [ ] `filters/types.js` com o tipo `Filter` em JSDoc (`@typedef`)
 - [ ] `lib/pixels.js`: grayscale, invert, blur
