@@ -11,7 +11,7 @@ import {
 	AttachmentTitle,
 } from "@/components/ui/attachment";
 import PhotoCanvas from "@/components/PhotoCanvas";
-import { invert } from "@/lib/pixels";
+import { grayscale } from "@/lib/pixels";
 
 function toMegabytes(bytes) {
 	return (bytes / 1048576).toFixed(1);
@@ -62,7 +62,7 @@ function App() {
 				)}
 
 				{/* Only shown once a photo has been chosen */}
-				{photo && <PhotoCanvas file={photo} filter={invert} />}
+				{photo && <PhotoCanvas file={photo} filter={grayscale} />}
 			</div>
 		</main>
 	);
