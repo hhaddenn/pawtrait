@@ -17,6 +17,10 @@ const EDGE_THRESHOLD = 0.15; // edges weaker than this (0–1) are ignored
 // The strongest possible Sobel magnitude: a jump from 0 to 255 seen by both kernels (4 × 255 × √2)
 const MAX_MAGNITUDE = 4 * 255 * Math.SQRT2;
 
+// Flow: the direction the hatching follows, so shading curves with the shape
+const FLOW_BLUR_RADIUS = 6; // a much softer blur than the contours: we want the big shapes, not the details
+const FLOW_THRESHOLD = 0.02; // below this (0–1) an area is "flat": keep the classic HATCH_ANGLE
+
 /**
  * Graphite pencil, first version: diagonal hatching that gets denser where the photo is darker.
  * @param {ImageData} imageData - the photo
@@ -27,6 +31,7 @@ export function pencil(imageData) {
 	const random = createRandom(seedFrom(tones));
 	const marks = [];
 	const edges = sobel(tones);
+	const flow = sobel(blur(tones, FLOW_BLUR_RADIUS));
 
 	// Contours (outline): short firm strokes along the edges, drawn first
 	for (let y = 0; y < edges.height; y += CONTOUR_SPACING) {
@@ -72,7 +77,7 @@ export function pencil(imageData) {
 		}
 	}
 
-	// Hatching (shading): diagonal strokes, denser where it's darker
+	// Hatching (shading): strokes that follow the shape (diagonal where it's flat), denser where it's darker
 	for (let y = 0; y < tones.height; y += SPACING) {
 		for (let x = 0; x < tones.width; x += SPACING) {
 			const darkness = 1 - brightnessAt(tones, x, y) / 255;
@@ -81,9 +86,12 @@ export function pencil(imageData) {
 			}
 			const cx = x + randomBetween(random, -SPACING / 2, SPACING / 2);
 			const cy = y + randomBetween(random, -SPACING / 2, SPACING / 2);
+			const index = y * tones.width + x;
+			const flowStrength = flow.magnitude[index] / MAX_MAGNITUDE;
+			const baseAngle =
+				flowStrength > FLOW_THRESHOLD ? flow.angle[index] : HATCH_ANGLE;
 			const angle =
-				HATCH_ANGLE +
-				randomBetween(random, -ANGLE_WOBBLE, +ANGLE_WOBBLE);
+				baseAngle + randomBetween(random, -ANGLE_WOBBLE, +ANGLE_WOBBLE);
 			const dx = (Math.cos(angle) * STROKE_LENGTH) / 2;
 			const dy = (Math.sin(angle) * STROKE_LENGTH) / 2;
 			const start = { x: cx - dx, y: cy - dy };
