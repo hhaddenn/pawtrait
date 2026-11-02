@@ -1,4 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { cn } from "cn";
+import { AlertCircleIcon } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { MAX_WIDTH, fitToWidth, loadBitmap } from "@/lib/image";
 
 /**
@@ -6,29 +9,67 @@ import { MAX_WIDTH, fitToWidth, loadBitmap } from "@/lib/image";
  */
 function PhotoCanvas({ file }) {
 	const canvasRef = useRef(null);
+	const [error, setError] = useState(null);
 
 	useEffect(() => {
+		let ignore = false;
+
 		// The effect itself can't be async, so the async work lives in this inner function
 		async function draw() {
-			const bitmap = await loadBitmap(file);
-			const size = fitToWidth(bitmap.width, bitmap.height, MAX_WIDTH);
+			try {
+				const bitmap = await loadBitmap(file);
 
-			const canvas = canvasRef.current;
+				if (ignore) {
+					bitmap.close();
+					return;
+				}
 
-			canvas.width = size.width;
-			canvas.height = size.height;
+				const size = fitToWidth(bitmap.width, bitmap.height, MAX_WIDTH);
 
-			const ctx = canvas.getContext("2d");
+				const canvas = canvasRef.current;
 
-			ctx.drawImage(bitmap, 0, 0, size.width, size.height);
+				canvas.width = size.width;
+				canvas.height = size.height;
 
-			bitmap.close();
+				const ctx = canvas.getContext("2d");
+
+				ctx.drawImage(bitmap, 0, 0, size.width, size.height);
+
+				bitmap.close();
+
+				setError(null);
+			} catch {
+				if (!ignore) {
+					setError("The file may be damaged. Try another one.");
+				}
+			}
 		}
 
 		draw();
+
+		return () => {
+			ignore = true;
+		};
 	}, [file]);
 
-	return <canvas ref={canvasRef} className="w-full h-auto rounded-2xl" />;
+	return (
+		<>
+			{error !== null && (
+				<Alert variant="destructive">
+					<AlertCircleIcon />
+					<AlertTitle>Can't open this photo</AlertTitle>
+					<AlertDescription>{error}</AlertDescription>
+				</Alert>
+			)}
+			<canvas
+				ref={canvasRef}
+				className={cn(
+					"w-full h-auto rounded-2xl",
+					error !== null && "hidden",
+				)}
+			/>
+		</>
+	);
 }
 
 export default PhotoCanvas;
