@@ -42,7 +42,7 @@ Cada estilo analisa a foto e devolve uma **lista de marcas** (traços, pontos, p
 
 - [x] 4.1 `lib/pixels.js`: `grayscale` (luminância ponderada) — análise
 - [x] 4.2 `lib/pixels.js`: `blur` (desfoque de caixa) — suaviza os tons antes de decidir onde riscar
-- [ ] 4.3 `lib/marks.js`: tipos de marca em JSDoc (`@typedef`) + `drawMarks(ctx, marks)`; `DrawingCanvas` desenha marcas de teste numa "folha" branca
+- [x] 4.3 `lib/marks.js`: tipos de marca em JSDoc (`@typedef`) + `drawMarks(ctx, marks)`; `DrawingCanvas` desenha marcas de teste numa "folha" branca
 - [ ] 4.4 `lib/random.js`: números pseudoaleatórios com semente (a mesma foto dá sempre o mesmo desenho)
 - [ ] 4.5 Primeiro lápis: tracejado diagonal mais denso nas zonas escuras → primeiro esboço visível
 - [ ] 4.6 `lib/pixels.js`: gradientes (Sobel) → os traços seguem a direção dos contornos + traços de contorno
