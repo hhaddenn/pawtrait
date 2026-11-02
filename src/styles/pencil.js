@@ -25,6 +25,10 @@ const FLOW_THRESHOLD = 0.02; // below this (0–1) an area is "flat": keep the c
 const STROKE_POINTS = 4; // points per stroke (2 = a straight line, more = a wobblier line)
 const TREMOR = 0.7; // how far each point can drift sideways, in pixels
 
+// Cross-hatching: a second layer of strokes in another direction, only in the darkest shadows
+const CROSS_THRESHOLD = 0.55; // darkness (0–1) above which cross-hatching starts
+const CROSS_ANGLE = Math.PI / 2.5; // ~72°: the second layer crosses the first at this angle
+
 /**
  * Graphite pencil, first version: diagonal hatching that gets denser where the photo is darker.
  * @param {ImageData} imageData - the photo
@@ -76,6 +80,8 @@ export function pencil(imageData) {
 		}
 	}
 
+	const crossMarks = [];
+
 	// Hatching (shading): strokes that follow the shape (diagonal where it's flat), denser where it's darker
 	for (let y = 0; y < tones.height; y += SPACING) {
 		for (let x = 0; x < tones.width; x += SPACING) {
@@ -99,8 +105,40 @@ export function pencil(imageData) {
 				opacity: 0.25 + darkness * 0.6,
 			};
 			marks.push(lineMark);
+
+			// Cross-hatching: a second stroke in the darkest shadows
+			if (darkness <= CROSS_THRESHOLD) {
+				continue;
+			}
+
+			const crossChance =
+				(darkness - CROSS_THRESHOLD) / (1 - CROSS_THRESHOLD);
+			if (random() > crossChance) {
+				continue;
+			}
+
+			const secondAngle =
+				baseAngle +
+				CROSS_ANGLE +
+				randomBetween(random, -ANGLE_WOBBLE, +ANGLE_WOBBLE);
+			const secondLineMark = {
+				type: "line",
+				points: handDrawnPoints(
+					random,
+					cx,
+					cy,
+					secondAngle,
+					STROKE_LENGTH,
+				),
+				width: randomBetween(random, 0.5, 1.2),
+				color: GRAPHITE,
+				opacity: 0.2 + darkness * 0.5,
+			};
+			crossMarks.push(secondLineMark);
 		}
 	}
+
+	marks.push(...crossMarks);
 
 	return { marks };
 }

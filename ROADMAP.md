@@ -49,7 +49,7 @@ Cada estilo analisa a foto e devolve uma **lista de marcas** (traços, pontos, p
 - [x] 4.6a `lib/pixels.js`: gradientes (Sobel) → traços de contorno (queixo, olhos, nariz)
 - [x] 4.6b O tracejado segue a direção dos contornos (as sombras curvam com a forma)
 - [x] 4.7a Tremor da mão: cada traço passa a ter vários pontos ligeiramente desalinhados (`handDrawnPoints`)
-- [ ] 4.7b Tracejado cruzado: uma segunda camada noutra direção nas sombras mais escuras
+- [x] 4.7b Tracejado cruzado: uma segunda camada noutra direção nas sombras mais escuras
 - [ ] 4.7c Grão do papel: textura subtil na camada `base` do estilo
 - [ ] 4.8 `styles/pencil.js` + `styles/index.js` (registo dos estilos) + tipo `Style` em JSDoc
 
