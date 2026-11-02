@@ -13,60 +13,43 @@ import {
 import PhotoCanvas from "@/components/PhotoCanvas";
 import { grayscale, blur } from "@/lib/pixels";
 import DrawingCanvas from "@/components/DrawingCanvas";
+import { createRandom, randomBetween } from "@/lib/random";
 
 function previewAnalysis(imageData) {
 	return blur(grayscale(imageData), 10);
 }
 
-const TEST_MARKS = [
-	{
-		type: "line",
-		points: [
-			{ x: 40, y: 60 },
-			{ x: 560, y: 60 },
-		],
-		width: 2,
-		color: "#2b2b2b",
-		opacity: 1,
-	},
-	{
-		type: "line",
-		points: [
-			{ x: 40, y: 60 },
-			{ x: 170, y: 90 },
-			{ x: 300, y: 30 },
-			{ x: 430, y: 90 },
-			{ x: 560, y: 60 },
-		],
-		width: 4,
-		color: "#2b2b2b",
-		opacity: 0.5,
-	},
-	{
-		type: "dot",
-		x: 200,
-		y: 100,
-		radius: 20,
-		color: "#FF0000",
-		opacity: 1,
-	},
-	{
-		type: "dot",
-		x: 50,
-		y: 50,
-		radius: 10,
-		color: "#3700FF",
-		opacity: 1,
-	},
-	{
-		type: "dot",
-		x: 100,
-		y: 100,
-		radius: 5,
-		color: "#22FF00",
-		opacity: 1,
-	},
-];
+/**
+ * Temporary test: lots of short random pencil strokes, always the same ones for the same seed.
+ * (from 4.5 on, the marks come from the pencil style)
+ */
+function makeScribbles(seed) {
+	const random = createRandom(seed);
+	const marks = [];
+
+	for (let i = 0; i < 300; i += 1) {
+		const x = randomBetween(random, 0, 600);
+		const y = randomBetween(random, 0, 400);
+		const length = randomBetween(random, 5, 25);
+		const angle = randomBetween(random, 0, Math.PI * 2);
+		const endPoint = {
+			x: x + Math.cos(angle) * length,
+			y: y + Math.sin(angle) * length,
+		};
+		const lineMark = {
+			type: "line",
+			points: [{ x, y }, endPoint],
+			width: randomBetween(random, 0.5, 2),
+			color: "#2b2b2b",
+			opacity: randomBetween(random, 0.3, 0.9),
+		};
+		marks.push(lineMark);
+	}
+
+	return marks;
+}
+
+const SCRIBBLE_MARKS = makeScribbles(42);
 
 function toMegabytes(bytes) {
 	return (bytes / 1048576).toFixed(1);
@@ -119,7 +102,11 @@ function App() {
 				{/* Only shown once a photo has been chosen */}
 				{photo && <PhotoCanvas file={photo} filter={previewAnalysis} />}
 
-				<DrawingCanvas width={600} height={400} marks={TEST_MARKS} />
+				<DrawingCanvas
+					width={600}
+					height={400}
+					marks={SCRIBBLE_MARKS}
+				/>
 			</div>
 		</main>
 	);
