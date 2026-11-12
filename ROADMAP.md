@@ -95,6 +95,7 @@ Cada estilo analisa a foto e devolve uma **lista de marcas** (traços, pontos, p
 - [ ] Pontilhado (halftone): pontos numa grelha, raio conforme a escuridão
 - [ ] Mosaico: peças (quadrados) com a cor média de cada zona
 - [ ] Cartoon: camada base posterizada + contornos como traços
+- [ ] ASCII: grelha de células, cada uma com um carácter escolhido pela escuridão (ex.: `" .:-=+*#%@"`, do mais claro para o mais escuro); novo tipo de marca `CharMark` (`char`, `x`, `y`, `size`) desenhado com `fillText` em letra monoespaçada. (Opcional) usar a direção do Sobel nos contornos (`|`, `/`, `-`, `\`)
 - [ ] (Opcional) "Original": a foto sem estilo, para comparar
 
 ---
